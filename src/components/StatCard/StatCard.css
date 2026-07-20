@@ -1,0 +1,26 @@
+.card {
+    background-color: #fafafa;
+    border: 1px solid #ececec;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    width: 220px;
+    padding: 30px;
+    margin: 10px;
+    transition: 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+h2 {
+    font-size: 14px;
+    color: #64748b;
+}
+
+p {
+    font-size: 32px;
+    font-weight: 700;
+    color: #111827;
+}
