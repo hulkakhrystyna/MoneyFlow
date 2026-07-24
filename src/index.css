@@ -55,6 +55,7 @@ body {
 }
 
 #root {
+  padding: 20px 50px;
   width: 1126px;
   max-width: 100%;
   margin: 0 auto;

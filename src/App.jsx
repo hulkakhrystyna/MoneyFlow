@@ -1,13 +1,11 @@
 import './App.css'
-import Header from "./components/Header/Header"
-import Stats from "./components/Stats/Stats"
+import Dashboard from './pages/Dashboard/Dashboard'
 
 function App() {
 
   return (
     <>
-      <Header />
-      <Stats />
+      <Dashboard />
     </>
   )
 }

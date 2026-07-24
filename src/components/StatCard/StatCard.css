@@ -1,4 +1,4 @@
-.card {
+.stat-card {
     background-color: #fafafa;
     border: 1px solid #ececec;
     border-radius: 10px;
@@ -10,16 +10,16 @@
     transition: 0.2s ease;
 }
 
-.card:hover {
+.stat-card:hover {
     transform: translateY(-3px);
 }
 
-h2 {
+.stat-title {
     font-size: 14px;
     color: #64748b;
 }
 
-p {
+.stat-amount {
     font-size: 32px;
     font-weight: 700;
     color: #111827;
