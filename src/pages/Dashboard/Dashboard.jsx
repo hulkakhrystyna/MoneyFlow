@@ -1,66 +1,109 @@
-import { useState } from "react"
-import Header from "../../components/Header/Header"
-import BalanceCard from "../../components/BalanceCard/BalanceCard"
-import Stats from "../../components/Stats/Stats"
-import TransactionForm from "../../components/TransactionForm/TransactionForm"
-import TransactionList from "../../components/TransactionList/TransactionList"
+import { useState } from "react";
+import Header from "../../components/Header/Header";
+import BalanceCard from "../../components/BalanceCard/BalanceCard";
+import Stats from "../../components/Stats/Stats";
+import TransactionForm from "../../components/TransactionForm/TransactionForm";
+import TransactionList from "../../components/TransactionList/TransactionList";
 
 function Dashboard() {
-    const [isTransactionFormOpen, setIsTransactionFormOpen] = useState(false);
+  const [isTransactionFormOpen, setIsTransactionFormOpen] = useState(false);
 
-    function openTransactionForm() {
-        setIsTransactionFormOpen(true);
-    }
+  function openTransactionForm() {
+    setIsTransactionFormOpen(true);
+  }
 
-    function closeTransactionForm() {
-        setIsTransactionFormOpen(false)
-    }
+  function closeTransactionForm() {
+    setIsTransactionFormOpen(false);
+  }
 
-    const [transactions, setTransactions] = useState([])
+  const [transactions, setTransactions] = useState([]);
 
-    function handleSaveTransaction(transaction) {
-        setTransactions((previousTransactions) => {
-            const updatedTransactions = [
-                ...previousTransactions,
-                transaction
-            ];
-    
-            console.log(updatedTransactions);
-    
-            return updatedTransactions;
-        });
-    
+  function handleSaveTransaction(transaction) {
+    const newTransaction = { id: crypto.randomUUID(), ...transaction };
+    setTransactions((previousTransactions) => {
+      const updatedTransactions = [...previousTransactions, newTransaction];
 
-        setFormData(emptyForm)
-        closeTransactionForm()
-    }
+      console.log(updatedTransactions);
 
-    const emptyForm = {
-        amount: "",
-        category: "",
-        description: "",
-        date: "",
-        type: ""
-    };
+      return updatedTransactions;
+    });
 
-    const [formData, setFormData] = useState(emptyForm)
+    setFormData(emptyForm);
+    closeTransactionForm();
+  }
 
-    function handleInputChange(event) {
-        setFormData((previousFormData) => ({
-            ...previousFormData,
-            [event.target.name]: event.target.value,
-        }));
-    }
+  function handleDeleteTransaction(id) {
+    setTransactions((previousTransactions) =>
+      previousTransactions.filter((transaction) => transaction.id !== id)
+    );
+  }
 
-    return (
-        <>
-            <Header />
-            <BalanceCard balance="£0.00" onAddTransaction={openTransactionForm}/>
-            <Stats />
-            {isTransactionFormOpen && <TransactionForm formData={formData} onChangeInput={handleInputChange} onCancelTransaction={closeTransactionForm} onSaveTransaction={handleSaveTransaction}/>}
-            <TransactionList transactions={transactions}/>
-        </>
-    )
+  const emptyForm = {
+    amount: "",
+    category: "",
+    description: "",
+    date: "",
+    type: "",
+  };
+
+  const [formData, setFormData] = useState(emptyForm);
+
+  function handleInputChange(event) {
+    setFormData((previousFormData) => ({
+      ...previousFormData,
+      [event.target.name]: event.target.value,
+    }));
+  }
+
+  function calculateTotalIncome() {
+    const totalIncome = transactions
+      .filter((transaction) => transaction.type === "Income")
+      .reduce((total, transaction) => total + Number(transaction.amount), 0);
+    return totalIncome;
+  }
+
+  function calculateTotalExpense() {
+    const totalExpense = transactions
+      .filter((transaction) => transaction.type === "Expense")
+      .reduce((total, transaction) => total + Number(transaction.amount), 0);
+    return totalExpense;
+  }
+
+  function calculateTotalBalance() {
+    const totalBalance = calculateTotalIncome() - calculateTotalExpense();
+    return totalBalance;
+  }
+
+  const totalBalance = calculateTotalBalance();
+  const totalIncome = calculateTotalIncome();
+  const totalExpense = calculateTotalExpense();
+
+  return (
+    <>
+      <Header />
+      <BalanceCard
+        balance={totalBalance}
+        onAddTransaction={openTransactionForm}
+      />
+      <Stats
+        totalBalance={totalBalance}
+        totalIncome={totalIncome}
+        totalExpense={totalExpense}
+      />
+      {isTransactionFormOpen && (
+        <TransactionForm
+          formData={formData}
+          onChangeInput={handleInputChange}
+          onCancelTransaction={closeTransactionForm}
+          onSaveTransaction={handleSaveTransaction}
+        />
+      )}
+      <TransactionList
+        transactions={transactions}
+        onDeleteTransaction={handleDeleteTransaction}
+      />
+    </>
+  );
 }
 
-export default Dashboard
+export default Dashboard;

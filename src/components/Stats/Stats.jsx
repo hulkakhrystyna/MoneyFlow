@@ -1,14 +1,14 @@
-import StatCard from "../StatCard/StatCard"
-import "./Stats.css"
+import StatCard from "../StatCard/StatCard";
+import "./Stats.css";
 
-function Stats() {
-    return(
-        <div className="container">
-            <StatCard title="Balance" amount="£0.00" />
-            <StatCard title="Income" amount="£0.00" />
-            <StatCard title="Expenses" amount="£0.00" />
-        </div>
-    )
+function Stats({ totalBalance, totalIncome, totalExpense }) {
+  return (
+    <div className="container">
+      <StatCard title="Balance" amount={totalBalance} />
+      <StatCard title="Income" amount={totalIncome} />
+      <StatCard title="Expenses" amount={totalExpense} />
+    </div>
+  );
 }
 
-export default Stats
+export default Stats;
