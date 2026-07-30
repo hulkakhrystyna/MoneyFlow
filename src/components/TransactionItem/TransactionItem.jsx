@@ -1,7 +1,11 @@
 import "./TransactionItem.css";
-import { FiTrash2 } from "react-icons/fi";
+import { FiEdit2, FiTrash2 } from "react-icons/fi";
 
-function TransactionItem({ transaction, onDeleteTransaction }) {
+function TransactionItem({
+  transaction,
+  onDeleteTransaction,
+  onEditTransaction,
+}) {
   const categoryIcons = {
     Food: "🍔",
     Shopping: "🛍",
@@ -22,13 +26,22 @@ function TransactionItem({ transaction, onDeleteTransaction }) {
         {transaction.category}
       </p>
       <p>{transaction.date}</p>
-      <button
-        className="delete-button"
-        aria-label="Delete transaction"
-        onClick={() => onDeleteTransaction(transaction.id)}
-      >
-        <FiTrash2 size={18} />
-      </button>
+      <div className="transaction-actions-btn">
+        <button
+          className="delete-button"
+          aria-label="Delete transaction"
+          onClick={() => onDeleteTransaction(transaction.id)}
+        >
+          <FiTrash2 size={18} />
+        </button>
+        <button
+          className="edit-button"
+          aria-label="Edit transaction"
+          onClick={() => onEditTransaction(transaction)}
+        >
+          <FiEdit2 size={18} />
+        </button>
+      </div>
     </div>
   );
 }

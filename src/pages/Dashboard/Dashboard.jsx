@@ -19,14 +19,23 @@ function Dashboard() {
   const [transactions, setTransactions] = useState([]);
 
   function handleSaveTransaction(transaction) {
-    const newTransaction = { id: crypto.randomUUID(), ...transaction };
-    setTransactions((previousTransactions) => {
-      const updatedTransactions = [...previousTransactions, newTransaction];
+    if (!editingTransaction) {
+      const newTransaction = { id: crypto.randomUUID(), ...transaction };
+      setTransactions((previousTransactions) => {
+        const updatedTransactions = [...previousTransactions, newTransaction];
 
-      console.log(updatedTransactions);
-
-      return updatedTransactions;
-    });
+        return updatedTransactions;
+      });
+    } else
+      setTransactions((previousTransactions) =>
+        previousTransactions.map((currentTransaction) => {
+          if (currentTransaction.id === editingTransaction.id) {
+            return { ...transaction, id: editingTransaction.id };
+          }
+          return currentTransaction;
+        })
+      );
+    setEditingTransaction(null);
 
     setFormData(emptyForm);
     closeTransactionForm();
@@ -78,6 +87,14 @@ function Dashboard() {
   const totalIncome = calculateTotalIncome();
   const totalExpense = calculateTotalExpense();
 
+  const [editingTransaction, setEditingTransaction] = useState(null);
+
+  function handleEditTransaction(transaction) {
+    setEditingTransaction(transaction);
+    setFormData(transaction);
+    openTransactionForm();
+  }
+
   return (
     <>
       <Header />
@@ -101,6 +118,7 @@ function Dashboard() {
       <TransactionList
         transactions={transactions}
         onDeleteTransaction={handleDeleteTransaction}
+        onEditTransaction={handleEditTransaction}
       />
     </>
   );

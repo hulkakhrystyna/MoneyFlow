@@ -1,7 +1,11 @@
 import "./TransactionList.css";
 import TransactionItem from "../TransactionItem/TransactionItem";
 
-function TransactionList({ transactions, onDeleteTransaction }) {
+function TransactionList({
+  transactions,
+  onDeleteTransaction,
+  onEditTransaction,
+}) {
   return (
     <div>
       <h2>Recent Transactions</h2>
@@ -11,6 +15,7 @@ function TransactionList({ transactions, onDeleteTransaction }) {
             key={transaction.id}
             transaction={transaction}
             onDeleteTransaction={onDeleteTransaction}
+            onEditTransaction={onEditTransaction}
           />
         ))}
       </div>
