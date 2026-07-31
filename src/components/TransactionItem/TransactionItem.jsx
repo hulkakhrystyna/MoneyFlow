@@ -13,6 +13,7 @@ function TransactionItem({
     Salary: "💰",
     Entertainment: "🎮",
     Bills: "📄",
+    Other: "🧩",
   };
 
   return (

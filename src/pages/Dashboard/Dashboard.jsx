@@ -14,6 +14,7 @@ function Dashboard() {
 
   function closeTransactionForm() {
     setIsTransactionFormOpen(false);
+    setFormData(emptyForm);
   }
 
   const [transactions, setTransactions] = useState([]);

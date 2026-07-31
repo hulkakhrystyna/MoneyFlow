@@ -24,14 +24,24 @@ function TransactionForm({
           </div>
           <div className="transaction-input-group">
             <label>Category</label>
-            <input
+            <select
               className="transaction-input"
               autoComplete="off"
-              type="text"
               name="category"
               value={formData.category}
               onChange={onChangeInput}
-            />
+            >
+              <option value="" disabled>
+                Select category
+              </option>
+              <option value="Food">Food</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Transport">Transport</option>
+              <option value="Salary">Salary</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Bills">Bills</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
           <div className="transaction-input-group">
             <label>Description</label>
