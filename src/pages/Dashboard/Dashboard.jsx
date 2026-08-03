@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import BalanceCard from "../../components/BalanceCard/BalanceCard";
 import Stats from "../../components/Stats/Stats";
@@ -17,7 +17,18 @@ function Dashboard() {
     setFormData(emptyForm);
   }
 
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState(() => {
+    const savedTransactions = localStorage.getItem("moneyflow-transactions");
+
+    return savedTransactions ? JSON.parse(savedTransactions) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem(
+      "moneyflow-transactions",
+      JSON.stringify(transactions)
+    );
+  }, [transactions]);
 
   function handleSaveTransaction(transaction) {
     if (!editingTransaction) {
